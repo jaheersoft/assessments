@@ -14,41 +14,47 @@ public class LunchUsingBlockingQueue {
 	private static String[] guysWaitingForLunch;
 	
 	public static void main(String args[]) {
+		
 		hotelSeats = new ArrayBlockingQueue<>(10);
 		guysWaitingForLunch = new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","aa"};
-		Waiter waiter = new Waiter();
-		Supervisor supervisor = new Supervisor();
+		
+		SeatAllocator seatAllocater = new SeatAllocator();
+		SeatVocater seatVocater = new SeatVocater();
+		
 		Runnable allocateSeat = new Runnable() {
             @Override
             public void run() {
                 for (int x = 0; x < guysWaitingForLunch.length; x++) {
-                	waiter.saysHiSirPleaseComeInAndHaveYourLunch(guysWaitingForLunch[x]);
+                	seatAllocater.saysHiSirPleaseComeInAndHaveYourLunch(guysWaitingForLunch[x]);
                 }
                 System.out.println("All guys got seated. Seats are full...");
             }
         };
+        
         Runnable vocateSeat = new Runnable() {
             @Override
             public void run() {
                 for (int x = 0; x < guysWaitingForLunch.length; x++) {
-                	supervisor.saysHelloSirPleaseVocateAsYouAreDoneWithLunch();
+                	seatVocater.saysHelloSirPleaseVocateAsYouAreDoneWithLunch();
                 }
                 System.out.println("All guys finished eating. Hotel closed...");
             }
         };
-		Thread seatAllocator = new Thread(allocateSeat,"seatAllocator");
-		Thread seatVocater = new Thread(vocateSeat,"seatVocater");
-		seatAllocator.start();
-		seatVocater.start();
+        
+		Thread waiter = new Thread(allocateSeat,"waiter");
+		Thread supervisor = new Thread(vocateSeat,"supervisor");
+		
+		waiter.start();
+		supervisor.start();
 		try {
-			seatAllocator.join();
-			seatVocater.join();
+			waiter.join();
+			supervisor.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	static class Waiter {
+	static class SeatAllocator {
 		public void saysHiSirPleaseComeInAndHaveYourLunch(String eater) {
 			try {
 				System.out.println("Guy "+eater+" is got seated.");
@@ -59,7 +65,7 @@ public class LunchUsingBlockingQueue {
 		}
 	}
 	
-	static class Supervisor {
+	static class SeatVocater {
 		public void saysHelloSirPleaseVocateAsYouAreDoneWithLunch() {
 			try {
 				String vocater = hotelSeats.take();

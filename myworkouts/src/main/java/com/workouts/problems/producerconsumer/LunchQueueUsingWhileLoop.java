@@ -13,20 +13,20 @@ public class LunchQueueUsingWhileLoop {
 	private static String[] guysWaitingForLunch;
 	private static int currentSize;
 
-	public static void main(String args[]) throws InterruptedException {
+	public static void main(String args[]) {
 		hotelSeats = new String[10];
 		guysWaitingForLunch = new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
 											"aa","bb","cc","dd","cc","dd","ee","ff","gg","hh","ii","jj","kk","ll","mm","nn","oo","pp","qq","rr","ss","tt","uu","vv","ww","xx","yy","zz"};
 		currentSize = 0;
 		
-		Waiter waiter = new Waiter();
-		Supervisor supervisor = new Supervisor();
+		SeatAllocater seatAllocater = new SeatAllocater();
+		SeatVocater seatVocater = new SeatVocater();
 		
 		Runnable allocateSeat = new Runnable() {
             @Override
             public void run() {
                 for (int x = 0; x < guysWaitingForLunch.length; x++) {
-                	waiter.saysHiSirPleaseComeInAndHaveYourLunch(guysWaitingForLunch[x]);
+                	seatAllocater.saysHiSirPleaseComeInAndHaveYourLunch(guysWaitingForLunch[x]);
                 }
                 System.out.println("All guys got seated. Seats are full...");
             }
@@ -36,25 +36,29 @@ public class LunchQueueUsingWhileLoop {
             @Override
             public void run() {
                 for (int x = 0; x < guysWaitingForLunch.length; x++) {
-                	supervisor.saysHelloSirPleaseVocateAsYouAreDoneWithLunch();
+                	seatVocater.saysHelloSirPleaseVocateAsYouAreDoneWithLunch();
                 }
                 System.out.println("All guys finished eating. Hotel closed...");
             }
         };
 		
-		Thread seatAllocator = new Thread(allocateSeat,"seatAllocator");
-		Thread seatVocater = new Thread(vocateSeat,"seatVocater");
+		Thread waiter = new Thread(allocateSeat,"waiter");
+		Thread supervisor = new Thread(vocateSeat,"supervisor");
 		
-		seatAllocator.start();
-		seatVocater.start();
+		waiter.start();
+		supervisor.start();
 		
 		//without join -> seat allocater and seat vocater acts as if they fighted and they are not talking to each other
 		//with join -> seat allocater and seat vocater acts as they are friends and they coordinate in their works like hey i do this, once i am done pls do your work - we can work together to solve a problem.
-		seatAllocator.join();
-		seatVocater.join();
+		try {
+			waiter.join();
+			supervisor.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	static class Waiter {
+	static class SeatAllocater {
 		public void saysHiSirPleaseComeInAndHaveYourLunch(String eater) {
 			while(currentSize == hotelSeats.length) {
 				System.out.println("Waiting for seat to be available.");
@@ -71,7 +75,7 @@ public class LunchQueueUsingWhileLoop {
 		}
 	}
 	
-	static class Supervisor {
+	static class SeatVocater {
 		public void saysHelloSirPleaseVocateAsYouAreDoneWithLunch() {
 			while(currentSize == 0) {
 				System.out.println("All seats are available now.");
@@ -86,5 +90,4 @@ public class LunchQueueUsingWhileLoop {
 			hotelSeats[currentSize] = ""; // eater vocated the seat now
 		}
 	}
-	
 }

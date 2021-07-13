@@ -12,7 +12,7 @@ public class LunchQueueUsingWaitNotify {
 
 	static Object key = new Object();
 
-	public static void main(String args[]) throws InterruptedException {
+	public static void main(String args[]) {
 		hotelSeats = new String[20];
 		guysWaitingForLunch = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
 				"p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "aa", "bb", "cc", "dd", "cc", "dd", "ee", "ff",
@@ -20,14 +20,14 @@ public class LunchQueueUsingWaitNotify {
 				"xx", "yy", "zz" };
 		currentSize = 0;
 
-		WaiterSays waiterSays = new WaiterSays();
-		OwnerSays ownerSays = new OwnerSays();
+		SeatAllocater seatAllocater = new SeatAllocater();
+		SeatVocater seatVocater = new SeatVocater();
 
 		Runnable allocateSeat = new Runnable() {
 			@Override
 			public void run() {
 				for (int x = 0; x < guysWaitingForLunch.length; x++) {
-					waiterSays.hiSirPleaseComeInAndHaveYourLunch(guysWaitingForLunch[x]);
+					seatAllocater.saysHiSirPleaseComeInAndHaveYourLunch(guysWaitingForLunch[x]);
 				}
 				System.out.println("All guys got seated. Seats are full...");
 			}
@@ -37,24 +37,28 @@ public class LunchQueueUsingWaitNotify {
 			@Override
 			public void run() {
 				for (int x = 0; x < guysWaitingForLunch.length; x++) {
-					ownerSays.helloSirPleaseVocateAsYouAreDoneWithLunch();
+					seatVocater.saysHelloSirPleaseVocateAsYouAreDoneWithLunch();
 				}
 				System.out.println("All guys finished eating. Hotel closed...");
 			}
 		};
 
-		Thread seatAllocator = new Thread(allocateSeat, "seatAllocator");
-		Thread seatVocater = new Thread(vocateSeat, "seatVocater");
+		Thread waiter = new Thread(allocateSeat, "waiter");
+		Thread supervisor = new Thread(vocateSeat, "supervisor");
 
-		seatAllocator.start();
-		seatVocater.start();
+		waiter.start();
+		supervisor.start();
 
-		seatAllocator.join();
-		seatVocater.join();
+		try {
+			waiter.join();
+			supervisor.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
-	static class WaiterSays {
-		public void hiSirPleaseComeInAndHaveYourLunch(String eater) {
+	static class SeatAllocater {
+		public void saysHiSirPleaseComeInAndHaveYourLunch(String eater) {
 			synchronized (key) {
 				if (currentSize == hotelSeats.length) {
 					System.out.println("Waiting for seat to be available.");
@@ -72,8 +76,8 @@ public class LunchQueueUsingWaitNotify {
 		}
 	}
 
-	static class OwnerSays {
-		public void helloSirPleaseVocateAsYouAreDoneWithLunch() {
+	static class SeatVocater {
+		public void saysHelloSirPleaseVocateAsYouAreDoneWithLunch() {
 			synchronized (key) {
 				if (currentSize == 0) {
 					System.out.println("All seats are available now.");
