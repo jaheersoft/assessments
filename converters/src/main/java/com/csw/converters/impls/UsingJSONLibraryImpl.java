@@ -45,7 +45,7 @@ public class UsingJSONLibraryImpl implements XMLJSONConverterI {
 					JSONArray jsonArrayValue = (JSONArray)value;
 					sb.append("<array");
 					sb.append(" name="+"'"+key+"'>");
-					jsonArrayValue.forEach(jav ->buildXML(jav,sb));
+					jsonArrayValue.forEach(jav -> buildXML(jav,sb));
 					sb.append("</array>");
 				}
 				if(value instanceof Boolean) {
@@ -106,7 +106,7 @@ public class UsingJSONLibraryImpl implements XMLJSONConverterI {
 				JSONArray jsonArrayValue = (JSONArray)passedObject;
 				sb.append("<array>");
 				sb.append("<object>");
-				jsonArrayValue.forEach(jav ->buildXML(jav,sb));
+				jsonArrayValue.forEach(jav -> buildXML(jav,sb));
 				sb.append("</object>");
 				sb.append("</array>");
 			}
