@@ -15,7 +15,7 @@ public class ProducerConsumerProblem {
         Runnable prodRunn = new Runnable() {
             @Override
             public void run() {
-                for (int x = 0; x < 50; x++) {
+                for (int x = 0; x < 10; x++) {
                     producer.produce();
                 }
                 System.out.println("Produced...");
@@ -25,7 +25,7 @@ public class ProducerConsumerProblem {
         Runnable consRunn = new Runnable() {
             @Override
             public void run() {
-                for (int x = 0; x < 50; x++) {
+                for (int x = 0; x < 10; x++) {
                     consumer.consume();
                 }
                 System.out.println("Consumer...");
