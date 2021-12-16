@@ -87,7 +87,7 @@ public class LunchQueueUsingWhileLoop {
 			}
 			--currentSize;
 			System.out.println("Guy "+hotelSeats[currentSize]+" at seat "+currentSize+" vocated.");
-			hotelSeats[currentSize] = ""; // eater vocated the seat now
+			hotelSeats[currentSize] = null; // eater vocated the seat now
 		}
 	}
 }

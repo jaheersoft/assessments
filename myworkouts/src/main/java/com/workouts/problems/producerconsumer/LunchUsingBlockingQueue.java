@@ -16,7 +16,7 @@ public class LunchUsingBlockingQueue {
 	public static void main(String args[]) {
 		
 		hotelSeats = new ArrayBlockingQueue<>(10);
-		guysWaitingForLunch = new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","aa"};
+		guysWaitingForLunch = new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","aa","bb"};
 		
 		SeatAllocator seatAllocater = new SeatAllocator();
 		SeatVocater seatVocater = new SeatVocater();
