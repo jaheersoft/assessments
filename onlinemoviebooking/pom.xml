@@ -5,7 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>onlinemoviebooking</name>
-  <description>onlinemoviebooking</description>
+  <description>onlinemoviebooking</description> 
   <modules>
   	<module>catalogs-api</module>
   	<module>cinemas-api</module>
