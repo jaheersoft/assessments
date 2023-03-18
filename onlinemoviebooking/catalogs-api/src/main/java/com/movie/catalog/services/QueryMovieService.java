@@ -21,7 +21,7 @@ public class QueryMovieService {
 		return movieMongoRepository.findMoviesByGenre(genre);
 	}
 	
-	public List<Movie> getMoviesByLanguages(String genre) {
+	public List<Movie> getMoviesByLanguage(String genre) {
 		return movieMongoRepository.findMoviesByLanguage(genre);
 	}
 	

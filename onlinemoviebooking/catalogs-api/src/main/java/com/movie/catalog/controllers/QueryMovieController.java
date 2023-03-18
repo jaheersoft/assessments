@@ -1,5 +1,7 @@
 package com.movie.catalog.controllers;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,33 @@ public class QueryMovieController {
 	public ResponseEntity<?> getMoviesByGeneres(@PathVariable String genre) {
 		try {
 			return new ResponseEntity<>(queryMovieService.getMoviesByGenre(genre), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/language/{language}")
+	public ResponseEntity<?> getMoviesByLanguage(@PathVariable String language) {
+		try {
+			return new ResponseEntity<>(queryMovieService.getMoviesByLanguage(language), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/title/{title}")
+	public ResponseEntity<?> getMoviesByTitle(@PathVariable String title) {
+		try {
+			return new ResponseEntity<>(queryMovieService.getMoviesByTitle(title), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/releasedate/{releaseDate}")
+	public ResponseEntity<?> getMoviesByTitle(@PathVariable Date releaseDate) {
+		try {
+			return new ResponseEntity<>(queryMovieService.getMoviesByReleaseDate(releaseDate), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
 		}
