@@ -13,6 +13,10 @@ public class QueryMovieService {
 	@Autowired
 	private MovieMongoRepository movieMongoRepository;
 	
+	public List<Movie> getAllMovies() {
+		return movieMongoRepository.findAll();
+	}
+	
 	public List<Movie> getMoviesByGenre(String genre) {
 		return movieMongoRepository.findMoviesByGenre(genre);
 	}

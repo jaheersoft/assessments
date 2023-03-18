@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,5 +46,6 @@ public class Movie {
 	
 	@DocumentReference
 	@Builder.Default
+	@JsonBackReference
 	private List<MovieCast> movieCasts = new ArrayList<>();
 }

@@ -22,13 +22,13 @@ public class CommandMovieController {
 	private CommandMovieService commandMovieService;
 	
 	@PostMapping("/add")
-	public ResponseEntity<List<com.movie.catalog.documents.Movie>> saveMovie(@RequestBody MovieDTO movieDTO) {
+	public ResponseEntity<?> saveMovie(@RequestBody MovieDTO movieDTO) {
 		try {
 			Movie movie = commandMovieService.saveMovie(movieDTO);
 			List<com.movie.catalog.documents.Movie> movies = commandMovieService.saveMovieToMongo(movie.getAddedOn());
 			return new ResponseEntity<>(movies,HttpStatus.CREATED);
 		} catch(Exception e) {
-			return new ResponseEntity<>(null,HttpStatus.OK);
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.OK);
 		}
 	}
 	

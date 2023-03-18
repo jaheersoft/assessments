@@ -3,9 +3,10 @@ package com.movie.catalog.services;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 import com.movie.catalog.dtos.MovieDTO;
 import com.movie.catalog.entities.Genre;
 import com.movie.catalog.entities.Language;
@@ -86,7 +87,7 @@ public class CommandMovieService {
 		List<com.movie.catalog.documents.Movie> movieDocuments = new ArrayList<>();
 		movies.forEach(movie -> {
 			com.movie.catalog.documents.Movie movieDocument = com.movie.catalog.documents.Movie.builder()
-					.country(movie.getCountry()).description(movie.getDescription())
+					.country(movie.getCountry()).description(movie.getDescription()).title(movie.getTitle())
 					.durationInMins(movie.getDurationInMins()).maturityRating(movie.getMaturityRating())
 					.releaseDate(movie.getReleaseDate()).year(movie.getYear()).build();
 			movie.getMovieLanguages().forEach(ml -> {
