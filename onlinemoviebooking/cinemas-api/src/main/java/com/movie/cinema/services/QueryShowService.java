@@ -14,6 +14,7 @@ import com.movie.cinema.documents.Cinema;
 import com.movie.cinema.documents.Screen;
 import com.movie.cinema.documents.Show;
 import com.movie.cinema.dtos.MovieDTO;
+import com.movie.cinema.dtos.ShowDTO;
 import com.movie.cinema.repositories.CinemaMongoRepository;
 import com.movie.cinema.repositories.ShowMongoRepository;
 
@@ -29,7 +30,7 @@ public class QueryShowService {
 	@Autowired
 	private RestTemplate template;
 
-	public Map<Show, MovieDTO> findShowsByCity(String city) {
+	public List<MovieDTO> findShowsByCity(String city) {
 		List<Show> shows = new ArrayList<>();
 		List<Cinema> cinemas = cinemaMongoRepository.findCinemasByCity(city);
 		cinemas.forEach(c -> {
@@ -37,9 +38,12 @@ public class QueryShowService {
 				shows.addAll(showMongoRepository.findShowsByScreenId(s.getId()));
 			});
 		});
-		Map<Show, MovieDTO> movieShows = new ConcurrentHashMap<Show, MovieDTO>();
+		List<MovieDTO> movieShows = new ArrayList<>();
 		shows.forEach(show -> {
-			getMovie(show.getMovieId()).thenAccept(movie -> movieShows.put(show, movie)).join();
+			getMovie(show.getMovieId()).thenAccept(movie -> {
+				movie.getShows().add(ShowDTO.builder().showTime(show.getTime()).screenName(show.getScreen().getName()).build());
+				movieShows.add(movie);
+			}).join();
 		});
 		return movieShows;
 	}

@@ -25,5 +25,7 @@ public class ShowDTO {
 	
 	private String screenId;
 	
+	private String screenName;
+	
 	private boolean isAvailable;
 }
