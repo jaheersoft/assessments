@@ -26,8 +26,9 @@ public class CinemaController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<Cinema> createCinema(@RequestBody CinemaDTO cinemaDTO) {
+	public ResponseEntity<com.movie.cinema.documents.Cinema> createCinema(@RequestBody CinemaDTO cinemaDTO) {
 		Cinema cinema = commandCinemaService.saveCinema(cinemaDTO);
-		return new ResponseEntity<>(cinema,HttpStatus.OK);
+		//commandCinemaService.saveCinemaToMongo(cinema);
+		return new ResponseEntity<>(commandCinemaService.saveCinemaToMongo(cinema),HttpStatus.OK);
 	}
 }

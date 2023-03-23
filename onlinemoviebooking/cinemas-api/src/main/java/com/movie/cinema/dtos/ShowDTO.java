@@ -23,5 +23,7 @@ public class ShowDTO {
 	
 	private String movieId;
 	
+	private String screenId;
+	
 	private boolean isAvailable;
 }

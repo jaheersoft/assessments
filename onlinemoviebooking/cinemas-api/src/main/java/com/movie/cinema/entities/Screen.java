@@ -13,9 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
-
+import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,15 +42,11 @@ public class Screen {
 	@Builder.Default
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,
             mappedBy = "screen")
+	@JsonIgnoreProperties("screen")
 	private List<Seat> seats = new ArrayList<>();
-	
-	@Builder.Default
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,
-            mappedBy = "screen")
-	private List<Show> shows = new ArrayList<>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "`cinema_id`")
-	@JsonManagedReference
+	@JsonIgnoreProperties("screens")
 	private Cinema cinema;
 }

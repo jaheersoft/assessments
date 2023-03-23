@@ -12,8 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,6 +48,6 @@ public class Cinema {
 	@Builder.Default
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,
             mappedBy = "cinema")
-	@JsonBackReference
+	@JsonIgnoreProperties("cinema")
 	private List<Screen> screens = new ArrayList<>();
 }

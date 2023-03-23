@@ -8,9 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +34,8 @@ public class Show {
 	@Column(nullable = false,name = "`time`")
 	private Timestamp time;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("screen")
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "`screen_id`")
 	private Screen screen;
 	

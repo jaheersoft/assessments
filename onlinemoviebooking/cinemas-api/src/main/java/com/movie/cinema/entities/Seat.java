@@ -9,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +27,7 @@ import lombok.NoArgsConstructor;
 public class Seat {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(nullable = false,name = "`row`")
@@ -37,5 +41,6 @@ public class Seat {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "`screen_id`")
+	@JsonIgnoreProperties("seats")
 	private Screen screen;
 }
