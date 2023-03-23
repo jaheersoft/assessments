@@ -16,7 +16,7 @@ public class Config {
 
 	private final MongoProperties properties;
 
-	public static final String KEY_STORE_TYPE = "\\filestore.jks";
+	//public static final String KEY_STORE_TYPE = "\\filestore.jks";
 	public static final String DEFAULT_KEY_STORE_PASSWORD = "changeit";
 
 	public Config(final MongoProperties properties) {

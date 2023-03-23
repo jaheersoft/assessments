@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MovieCast {
 
-	@Id
+	
 	private String id;
 	
 	private String name;

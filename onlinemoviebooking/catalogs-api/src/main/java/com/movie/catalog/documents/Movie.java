@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Movie {
 
-	@Id
+	
 	private String id;
 	
 	private String title;

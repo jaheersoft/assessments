@@ -12,6 +12,7 @@ import com.movie.catalog.entities.Genre;
 import com.movie.catalog.entities.Language;
 import com.movie.catalog.entities.Movie;
 import com.movie.catalog.entities.MovieCast;
+import com.movie.catalog.repositories.MovieCastMongoRepository;
 import com.movie.catalog.repositories.MovieJPARepository;
 import com.movie.catalog.repositories.MovieMongoRepository;
 
@@ -23,6 +24,9 @@ public class CommandMovieService {
 
 	@Autowired
 	private MovieMongoRepository movieMongoRepository;
+	
+	@Autowired
+	private MovieCastMongoRepository movieCastMongoRepository;
 
 	public Movie saveMovie(MovieDTO movieDTO) {
 		Movie movie = Movie.builder().description(movieDTO.getDescription())
@@ -86,7 +90,7 @@ public class CommandMovieService {
 		List<Movie> movies = movieJPARepository.findAll();
 		List<com.movie.catalog.documents.Movie> movieDocuments = new ArrayList<>();
 		movies.forEach(movie -> {
-			com.movie.catalog.documents.Movie movieDocument = com.movie.catalog.documents.Movie.builder()
+			com.movie.catalog.documents.Movie movieDocument = com.movie.catalog.documents.Movie.builder().id(movie.getId())
 					.country(movie.getCountry()).description(movie.getDescription()).title(movie.getTitle())
 					.durationInMins(movie.getDurationInMins()).maturityRating(movie.getMaturityRating())
 					.releaseDate(movie.getReleaseDate()).year(movie.getYear()).build();
@@ -99,6 +103,7 @@ public class CommandMovieService {
 			movie.getMovieCasts().forEach(mc -> {
 				com.movie.catalog.documents.MovieCast movieCast = com.movie.catalog.documents.MovieCast.builder()
 						.id(mc.getId()).name(mc.getCast()).role(mc.getRole()).movie(movieDocument).build();
+				movieCastMongoRepository.save(movieCast);
 				movieDocument.getMovieCasts().add(movieCast);
 			});
 			movieDocuments.add(movieDocument);
