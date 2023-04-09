@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+  <title>Retail Store Feed</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+  <div th:replace="fragments/header :: header"></div>
+
+  <div class="container-fluid">
+  	<h1 class="mt-5">Upload Feed File</h1>
+    <div class="row mt-5">
+        <h2 class="mt-5">Upload File to AWS S3</h2>
+        <form method="POST" enctype="multipart/form-data" action="/upload">
+            <div class="mb-3">
+                <label for="file" class="form-label">Upload file...</label>
+                <input class="form-control" type="file" name="file" id="file">
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary mb-3">Upload</button>
+            </div>
+        </form>
+    </div>
+    <div class="row mt-5">
+        <h2>Download files from AWS S3</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Path</th>
+                <th scope="col">Name</th>
+                <th scope="col">Download</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="file,iter : ${files}">
+                <tr>
+                    <th scope="row">1</th>
+                    <td th:text="${file.filePath}"></td>
+                    <td th:text="${file.fileName}"></td>
+                    <td><a
+                            th:href="@{'/download/'+${file.id}}">Download</a></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+  
+  </div>
+  </div>
+
+  <div th:replace="fragments/footer :: footer"></div>
+  
+ </body>
+
+</html>
