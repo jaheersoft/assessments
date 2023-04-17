@@ -125,4 +125,21 @@ public class StoreController {
 	 * 
 	 * return "redirect:/tutorials"; }
 	 */
+	
+	@GetMapping("/admin")
+	public String admin() {
+		return "<h2>Welcome Admin!</h2>";
+	}
+
+	@GetMapping("/welcome")
+	public String user() {
+		return "login";
+	}
+
+	@GetMapping("/login")
+	public String login() {
+		return "redirect:/stores_upload_form";
+	}
+	
+	
 }
