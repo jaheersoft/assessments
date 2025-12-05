@@ -9,7 +9,7 @@ public class BubbleSort {
         System.out.println(Arrays.toString(bubbleSort(arr)));
     }
 
-    //concept -  compares two adjacent elements then swapping and last element is bubbled out as it will high after each iteration
+    //concept -  compares two adjacent elements then swapping and last element is bubbled out as it will high after one full innner for loop execution
     //time comp - O(n2) best case - O(n)
     //Space comp - O(1)
     //stable sort

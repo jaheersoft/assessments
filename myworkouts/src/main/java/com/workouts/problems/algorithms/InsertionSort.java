@@ -2,7 +2,7 @@ package com.workouts.problems.algorithms;
 
 import java.util.Arrays;
 
-public class Insertion {
+public class InsertionSort {
     public static void main(String[] args) {
         int arr[] = {10, 9, 7, 6, 3, 4, 2, 5 , 1};
         System.out.println(Arrays.toString(sort(arr)));

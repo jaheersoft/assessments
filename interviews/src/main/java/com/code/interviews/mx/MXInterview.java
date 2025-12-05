@@ -1,6 +1,4 @@
-package com.workouts.problems.algorithms;
-
-import java.util.Arrays;
+package com.code.interviews.mx;
 
 public class MXInterview {
 
