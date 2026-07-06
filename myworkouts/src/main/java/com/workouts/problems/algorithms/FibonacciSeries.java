@@ -4,6 +4,9 @@ public class FibonacciSeries {
 
     public static void main(String[] args) {
         System.out.println(usingRecursion(5));
+        System.out.println(usingDPBottomUp(5));
+        System.out.println(usingDPTopDown(5));
+        System.out.println(usingBetterIteration(5));
     }
 
     public static int usingRecursion(int n) {

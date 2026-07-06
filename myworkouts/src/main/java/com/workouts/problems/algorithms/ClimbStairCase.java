@@ -6,26 +6,27 @@ public class ClimbStairCase {
 
     public static void main(String[] args) {
         int[] memoizationForNoOfSteps = new int[5];
-
+        System.out.println(usingBottomUpOptimized(5));
     }
 
-    public static int usingRecursion(int noOfSteps) {
+    public static int usingTopDownWithOutMemoization(int noOfSteps) {
 
         return 0;
     }
 
-    public static int usingTopDown(int noOfSteps,int[] memos) {
+    //
+    public static int usingTopDownWithMemoization(int noOfSteps,int[] memos) {
         if(noOfSteps <= 2)
             return  noOfSteps;
         if(memos[noOfSteps] > 0) {
             return memos[noOfSteps];
         }
-        memos[noOfSteps] = usingTopDown(noOfSteps - 1, memos) +
-                usingTopDown(noOfSteps - 2, memos);
+        memos[noOfSteps] = usingTopDownWithMemoization(noOfSteps - 1, memos) +
+                usingTopDownWithMemoization(noOfSteps - 2, memos);
         return memos[noOfSteps];
     }
 
-    // timecomplexity - O(n)
+    // timecomplexity - O(n)`
     // spacecomplexity - O(n)
     public static int usingBottomUp(int noOfSteps) {
         if(noOfSteps == 1)
